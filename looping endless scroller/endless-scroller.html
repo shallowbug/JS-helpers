@@ -1,0 +1,44 @@
+<script type="text/javascript">
+  var num = <?php echo $n ?>;
+  var scrollSpacer = 's' + (Math.floor(Math.random() * num) + 1);
+  var lastSpacer = 's' + num;
+  var workList = document.getElementById("work-list").cloneNode(true);
+  var workWrapper = document.getElementById("work");
+  var workBounding = document.getElementById(lastSpacer);
+  var scrollTo = document.getElementById(scrollSpacer);
+
+  window.history.scrollRestoration = "manual";
+
+  scrollTo.scrollIntoView({block: "center"});
+
+  document.addEventListener("DOMContentLoaded", function() {
+    console.log("DOMContentLoaded");
+    scrollTo.scrollIntoView({block: "center"});
+  });  
+
+  window.onload = function () {
+    workWrapper.classList.remove("hide");
+    scrollTo.scrollIntoView({block: "center"});
+    console.log("onload");
+    var workListWrapper = document.getElementById("work-list");
+    window.onscroll = function() {
+     if ((window.innerHeight + Math.ceil(window.pageYOffset)) >= document.body.offsetHeight) {
+      console.log("At the bottom!");
+      workWrapper.innerHTML += workListWrapper.outerHTML;
+     }
+     if (Math.ceil(window.pageYOffset) == 0) {
+      console.log("At the top!");
+      workWrapper.firstElementChild.classList.add("top");
+      var topElem = workWrapper.firstElementChild;
+      workWrapper.insertBefore(workList.cloneNode(true), workWrapper.firstChild);
+      topElem.scrollIntoView();
+     }
+    }
+  }
+
+  console.log(workBounding);
+  console.log(scrollSpacer);
+  console.log(lastSpacer);
+  console.log(workList);
+
+</script>
